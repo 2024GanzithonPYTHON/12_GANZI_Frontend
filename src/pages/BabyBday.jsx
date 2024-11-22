@@ -76,10 +76,8 @@ function BabyStatus() {
           shouldCloseOnSelect
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
+          
           />
-        <InputExplanation fontSize='20px' marginTop='40px'>아기 이름을 알려주세요</InputExplanation>
-        <InputExplanation fontSize='13px' marginTop='15px'>※ 추후에 변경할 수 없습니다. </InputExplanation>
-        <Input placeholder='이름을 입력해주세요'/>
         <NextButton marginTop='18em' onClick={handleNext} disabled={''}>다음</NextButton>
     </PageContainer>
   )

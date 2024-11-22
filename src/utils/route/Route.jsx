@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Home from '../../pages/Start';
 import Join from '../../pages/Join';
 import Userinfo from '../../pages/Userinfo';
 import Login from '../../pages/Login';
@@ -11,9 +10,11 @@ import BabyBday from '../../pages/BabyBday';
 import BabyName from '../../pages/BabyName';
 import BabyRelation from '../../pages/BabyRelation';
 import BabyStatus from '../../pages/BabyStatus';
+import Home from '../../pages/Home';
 
 export const routes = [
     {path: '/' , element: <Start/>},
+    {path: '/home', element: <Home/>},
     {path: '/join' , element: <Join/>},
     {path: '/login' , element: <Login />},
     {path: '/userinfo' , element: <Userinfo/>},

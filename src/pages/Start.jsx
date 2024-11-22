@@ -38,7 +38,7 @@ const StartBtn = styled.button`
   cursor: pointer;
 `
 
-function Home() {
+function Start() {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -59,4 +59,4 @@ function Home() {
     </PageContainer>
   )
 }
-export default Home;
+export default Start;
