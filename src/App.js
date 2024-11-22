@@ -10,8 +10,8 @@ const AppContainer = styled.div`
     border: 1px solid blue;
 `;
 const Content = styled.div`
-  width: 80%;
-  max-width: 640px;
+  width: 100%;
+  max-width: 1020px;
   min-height: 100vh;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); //경계구분이 힘들어어 임의로 설정해둔 것입니다. 추후에 지울 예정입니다. 

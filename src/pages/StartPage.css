@@ -1,0 +1,110 @@
+/* StartPage.css */
+
+.main-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .logo-image {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800; /* ExtraBold */
+    font-size: 22px;
+    color: #3373BA;
+    line-height: auto;
+    letter-spacing: 0;
+    margin-bottom: 30px;
+  }
+  
+  .start-button {
+    width: 313.67px;
+    height: 67.98px;
+    background-color: #ffffff;
+    border: 2px solid #000000; /* Stroke */
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px 0;
+  }
+  
+  .learn-more-button {
+    width: 81px;
+    height: 28px;
+    background-color: #3373BA;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px 0;
+  }
+  
+  @media (max-width: 430px) {
+    .main-container {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .logo-image {
+      width: 120px;
+      height: auto;
+    }
+  
+    .start-button {
+      width: 280px;
+      height: 60px;
+      font-size: 16px;
+    }
+  
+    .learn-more-button {
+      width: 70px;
+      height: 25px;
+      font-size: 12px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .main-container {
+      width: 100%;
+      min-height: 100vh;
+      padding: 50px;
+    }
+  
+    .logo-image {
+      width: 200px;
+      height: auto;
+      margin-bottom: 40px;
+    }
+  
+    .title {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+  
+    .start-button {
+      width: 400px;
+      height: 80px;
+      font-size: 20px;
+    }
+  
+    .learn-more-button {
+      width: 100px;
+      height: 35px;
+      font-size: 16px;
+    }
+  }
+  
