@@ -24,8 +24,8 @@ const Content = styled.div`
     width: 100%;
     height: auto; //모바일에서는 높이를 유동적으로
     padding: 10px; 
-    font-size: 14px; 
-    overflow-x: hidden;;
+    font-size: 10px; 
+    overflow-x: hidden;
   }
   `
   

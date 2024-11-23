@@ -13,15 +13,19 @@ export const LoginInputContainer = styled.input`
 `
 export const JoinInputContainer = styled.input`
     width: 80%;
-    height: 30px;
+    height: ${(props) => props.height};
     font-size: 16px;
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid #B6B6B6;
+    border-bottom: ${(props) => props.borderBottom || "1px solid #B6B6B6"};
     background-color: transparent;
     margin-bottom: 35px;
     cursor: text;
+
+    &::placeholder {
+      color: #B6B6B6;
+    }
 `
 export const BabyInfoInput = styled.button`
     width: 100%;

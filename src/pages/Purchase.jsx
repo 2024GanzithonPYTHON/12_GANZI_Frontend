@@ -7,7 +7,6 @@ import Post from '../components/Post';
 import Footer from '../components/Footer';
 import WriteImg from '../assets/WriteImg.png';
 
-
 const CommunityName = styled.div`
   width: 100%;
   height: auto;
