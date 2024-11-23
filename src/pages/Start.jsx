@@ -1,62 +1,22 @@
-import React from 'react'
-import { PageContainer } from '../components/ScreenSizing';
-import LogoImg from '../assets/Logo.png'
-import styled from 'styled-components';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../assets/Logo.png'; // 로고 이미지 파일 경로
+import '../styles/StartPage.css'; // CSS 파일 분리
 
-const LogoContainer = styled.div`
-  width: 100%;
-  height: 200px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  margin-top: 10em;
-`
-const Title = styled.div`
-  width: 100%;
-  height: 30px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  font-size: 24px;
-  font-weight: bold;
-  color: ${({theme} )=> theme.colors.mainColor};
-`
-const StartBtn = styled.button`
-  width: 50%;
-  height: 67px;
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content:  center;
-  background-color: transparent;
-  border-radius: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 30px;
-  cursor: pointer;
-`
-
-function Start() {
+// 시작 페이지 컴포넌트
+function StartPage() {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/login')
-  }
-
   return (
-    <PageContainer>
-      <div style={{display :'flex' , alignItems:'center', justifyContent:'center', flexDirection:'column'}}>
-        <LogoContainer>
-          <img src={LogoImg} alt="Logo" width='150px'/>
-        </LogoContainer>
-        <Title>가정을 위한</Title>
-        <Title>공동 소비 플랫폼</Title>
-        <StartBtn onClick={handleClick}>시작하기</StartBtn>
-
-      </div>
-    </PageContainer>
-  )
+    <div className="main-container">
+      <img src={Logo} alt="로고" className="logo-image" />
+      <h2 className="title">가정을 위한 공동 소비 플랫폼</h2>
+      <button className="start-button" onClick={() => navigate('/login')}>
+        시작하기
+      </button>
+      <button className="learn-more-button">알아보기</button>
+    </div>
+  );
 }
-export default Start;
+
+export default StartPage;

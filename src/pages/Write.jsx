@@ -26,7 +26,7 @@ const CommunityName = styled.div`
   margin-right: 10px;
 `
 const CompleteBtn = styled.button`
-  width: 10%;
+  width: 15%;
   border: 1px solid blue;
   display: flex;
   flex-direction: row;

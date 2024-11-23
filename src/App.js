@@ -23,9 +23,10 @@ const Content = styled.div`
   @media (max-width: 430px) {
     width: 100%;
     height: auto; //모바일에서는 높이를 유동적으로
-    padding: 10px; 
     font-size: 10px; 
     overflow-x: hidden;
+    margin: 0 auto;
+    padding: 0;
   }
   `
   

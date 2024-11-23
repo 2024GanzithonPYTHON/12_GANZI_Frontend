@@ -15,15 +15,15 @@ const PageName = styled.div`
   margin-bottom: 10px;
 `
 const InputExplanation = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #200e13c7;
-    font-size: ${(props)=> props.fontSize};
-    margin-top: ${(props) => props.marginTop};
-    font-weight: bold;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #200e13c7;
+  font-size: ${(props)=> props.fontSize};
+  margin-top: ${(props) => props.marginTop};
+  font-weight: bold;
 `
 const Input = styled.input`
   margin-top: 20px;
