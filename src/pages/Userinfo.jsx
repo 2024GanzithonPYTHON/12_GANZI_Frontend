@@ -2,10 +2,10 @@ import {React} from 'react'
 import styled from 'styled-components'
 import { TabContainer } from '../components/Tab';
 import { PageContainer } from '../components/ScreenSizing';
-import { NextButton} from '../components/Input';
+import { NextButton } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 
-const PageName = styled.div`
+const PageName = styled.div` //conponent
   width: 100%;
   height: auto;
   font-size: 15px;
@@ -33,7 +33,7 @@ const Input = styled.input`
   background-color: transparent;
   color: #200e13c7;
   cursor: pointer;
-  width: 80%;
+  width: 60%;
   height: auto;
   padding: 10px;
   margin-bottom: 5px;
@@ -54,7 +54,7 @@ function BabyStatus() {
         navigate('/home')
     }
   return (
-    <PageContainer style={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection :'column'}}>
+    <PageContainer>
         <PageName>회원가입</PageName>
         <TabContainer />
         <InputExplanation fontSize='20px' marginTop='40px'> 배송지와 이메일을 알려주세요</InputExplanation>
@@ -62,7 +62,7 @@ function BabyStatus() {
         <Input placeholder='📦 배송지를 입력해주세요' className='input-with-svg'></Input>
         <Input placeholder='📧 이메일을 입력해주세요'>
         </Input>
-        <NextButton marginTop='18em' onClick={handleNext} disabled={''}>다음</NextButton>
+        <NextButton marginTop='11em' onClick={handleNext} disabled={''}>시작하기</NextButton>
     </PageContainer>
   )
 }

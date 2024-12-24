@@ -6,14 +6,15 @@ import { BrowserRouter } from "react-router-dom";
 import theme from "./utils/theme/Theme";
 import App from "./App";
 
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
-    
+    <React.StrictMode>
         <ThemeProvider theme={theme}>
             <BrowserRouter>
                 <App/>
             </BrowserRouter>        
         </ThemeProvider>
-    
+    </React.StrictMode>
 );

@@ -6,13 +6,14 @@ const PostContainer = styled.div`
     height: auto;
     display: flex;
     align-items: center;
-
+    margin-top: 20px;
 `
 const EachPost = styled.div`
     width: 100%;
     height: 80px;
     border-bottom: 1px solid ${({theme}) => theme.colors.grayColor};
-    padding: 0px 20px;
+    padding: 0px 20px 10px 20px;
+    
 `
 const Title = styled.div`
     width: 100%;
@@ -30,18 +31,18 @@ const NickName = styled.div`
     color: #7C7C7C;
     font-size: 12px;
 `
-const PostInfo = styled.div`
+const Date = styled.div`
     color: #7C7C7C;
     font-size: 12px;
 `
-function Post({title, content,nickname,time}) {
+function Post({title, content,nickname, time}) {
   return (
     <PostContainer>
         <EachPost>
             <Title>{title}</Title>
             <Content>{content}</Content>
             <NickName>{nickname}</NickName>
-            <PostInfo>{time}</PostInfo>
+            <Date>{time}</Date>
         </EachPost>
     </PostContainer>
   )

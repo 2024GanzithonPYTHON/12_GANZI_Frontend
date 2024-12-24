@@ -4,11 +4,10 @@ import 'react-datepicker/dist/react-datepicker.module.css';
 import styled from 'styled-components'
 import { TabContainer } from '../components/Tab';
 import { PageContainer } from '../components/ScreenSizing';
-import { NextButton} from '../components/Input';
 import { ko } from 'date-fns/locale';
 import useIsMobile from '../hooks/LoginUi';
 import { useNavigate } from 'react-router-dom';
-import '../styles/BabyBday.css';
+import { NextButton } from '../components/Button';
 
 const PageName = styled.div`
   width: 100%;
@@ -34,31 +33,18 @@ const StyledDatePicker = styled(DatePicker)`
   margin-top: 20px;
   border-radius: 5px;
   border: 1px solid #000;
-  box-shadow: 0 10px 30px rgba(112,136,210,0.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   background-color: #fff;
   color: #200e13c7;
   cursor: pointer;
-  width: 450px;
+  width: 100%;
   height: auto;
   padding: 10px;
   margin-bottom: 5px;
   font-weight: bold;
   font-size: 16px;
 `
-const Input = styled.input`
-    margin-top: 20px;
-  border-radius: 5px;
-  border: 1px solid #000;
-  box-shadow: 0 10px 30px rgba(112,136,210,0.1);
-  background-color: #fff;
-  color: #200e13c7;
-  cursor: pointer;
-  width: 450px;
-  height: auto;
-  padding: 10px;
-  margin-bottom: 5px;
-  font-size: 12px;
-`
+
 function BabyStatus() {
     const navigate = useNavigate();
     const isMobile = useIsMobile();
@@ -90,48 +76,25 @@ function BabyStatus() {
         };
 
 
-    if(!isMobile) {
-      return (
-        <PageContainer style={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection :'column'}}>
-            <PageName>회원가입</PageName>
-            <TabContainer />
-            <InputExplanation fontSize='20px' marginTop='40px'>아기 생일을 알려주세요</InputExplanation>
-            <InputExplanation fontSize='13px' marginTop='15px'>※ 추후에 변경할 수 없습니다. </InputExplanation>
-            <StyledDatePicker 
-              locale={ko}
-              dateFormat='yyyy-MM-dd'
-              shouldCloseOnSelect
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              
-              />
-            <NextButton marginTop='18em' onClick={handleNextBtn} disabled={''}>다음</NextButton>
-        </PageContainer>
-      )
-    }
-
-
 return (
-  <div className="join3-container">
-     <div className="header">
-     <div className="back-button" onClick={() => navigate(-1)}></div>
-     <h2 className="join3-title">회원가입</h2>
-     </div>
-     <h3 className="join3-subtitle">생년월일을 입력해주세요</h3>
-     <div className="datepicker-container">
-       <img className="calendar-logo" />
-       <input
-            type="text"
-            className={`date-input ${!isValid ? 'invalid' : ''}`}
-            placeholder="YYYY-MM-DD"
-            value={birthDate}
-            onChange={handleBirthDateChange}
-          />
-        </div>
-        <button className="next-button" onClick={handleNext} disabled={!isValid || !birthDate}>
-          다음
-        </button>
-      </div>
+  <>
+  <PageContainer style={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection :'column'}}>
+  <PageName>회원가입</PageName>
+  <TabContainer />
+  <InputExplanation fontSize='20px' marginTop='40px'>아기 생일을 알려주세요</InputExplanation>
+  <InputExplanation fontSize='13px' marginTop='15px'>※ 추후에 변경할 수 없습니다. </InputExplanation>
+  <StyledDatePicker 
+    locale={ko}
+    dateFormat='yyyy-MM-dd'
+    shouldCloseOnSelect
+    selected={selectedDate}
+    onChange={(date) => setSelectedDate(date)}
+    
+    />
+  <NextButton marginTop='14em' onClick={handleNextBtn} disabled={''}>다음</NextButton>
+</PageContainer>
+
+</>
 )
 }
 

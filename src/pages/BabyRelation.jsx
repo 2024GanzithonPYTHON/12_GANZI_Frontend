@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { TabContainer } from '../components/Tab';
 import { PageContainer } from '../components/ScreenSizing';
-import { BabyInfoInput , NextButton} from '../components/Input';
+import { BabyInfoInput} from '../components/Input';
 import { useNavigate } from 'react-router-dom';
+import { NextButton } from '../components/Button';
 
 const PageName = styled.div`
   width: 100%;
@@ -40,7 +41,7 @@ function BabyStatus() {
         <BabyInfoInput marginTop='30px'>엄마예요 👩🏻</BabyInfoInput>
         <BabyInfoInput>아빠예요 👨🏻</BabyInfoInput>
         <BabyInfoInput>기타 👨‍👩‍👧‍👧</BabyInfoInput>
-        <NextButton marginTop='10em' onClick={handleNext}>다음</NextButton>
+        <NextButton onClick={handleNext}>다음</NextButton>
     </PageContainer>
   )
 }

@@ -2,15 +2,13 @@ import React from "react";
 import RouteSetting from "./utils/route/Route";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { makeCenterColumn } from "./styles/mixins";
 
 const AppContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${makeCenterColumn}
     overflow: hidden;
 `;
-
 
 const Content = styled.div`
   width: 100%;
@@ -29,17 +27,20 @@ const Content = styled.div`
     padding: 0;
   }
   `
-  
+const queryClient = new QueryClient();
+
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
   return (
     <>
+    <QueryClientProvider client={queryClient}>
     <AppContainer>
       <Content isLoginPage={isLoginPage}>
           <RouteSetting />
       </Content>
       </AppContainer>
+      </QueryClientProvider>
     </>
   );
 }

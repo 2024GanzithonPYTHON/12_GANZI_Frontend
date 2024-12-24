@@ -33,7 +33,6 @@ const RouteSetting = () => (
         {routes.map(({path, element}) => (
             <Route key={path} path={path} element={element}/>
         ))}
-        
     </Routes>
 );
 export default RouteSetting;

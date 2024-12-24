@@ -1,60 +1,102 @@
-// Join.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
+import { PageContainer } from '../components/ScreenSizing';
+import { BackIcon } from '../assets/icons/icons'
 import Logo from '../assets/Logo.png';
-import '../styles/Join.css';
+import HouseLogo from '../assets/HouseLogo.png'
+import { TabContainer } from '../components/Tab';
+import theme from '../utils/theme/Theme';
+import { JoinInputContainer} from '../components/Input';
+import { NextButton } from '../components/Button';
+
+const Header = styled.div` //conponent
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:center;
+`
+const PageName = styled.div` //conponent
+  width: 100%;
+  height: auto;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const IntroContainer = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+  margin-bottom: 20px;
+`
+const CatchPhraseContainer = styled.div`
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const CatchPhrase = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+  color:  ${(props) => props.color || "#B6B6B6"};
+  width: 100%;
+`
+const LogoIcon = styled.img`
+  width: 25%;
+  height: 25%;
+`
+const HouseLogoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
+  height: 20%;
+`
+const HouseLogoIcon = styled.img`
+    width: 20%;
+    height: 20%;
+`
 
 function Join() {
-  const [nickname, setNickname] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const navigate = useNavigate();
-
   return (
-    <div className="join-container">
-      <div className="header">
-        <div className="back-button" onClick={() => navigate(-1)}></div>
-        <h2 className="join-title">회원가입</h2>
-      </div>
-      
-      <div className="content-container">
-        <img src={Logo} alt="로고" className="logo-image" />
-        <h2 className="slogan">가정을 위한 공동 소비 플랫폼</h2>
-        <input
-          type="text"
-          placeholder="닉네임"
-          className="input-style"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-        />
-        <div className="username-container">
-          <input
-            type="text"
-            placeholder="아이디"
-            className="input-style username-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <button className="check-button">중복확인</button>
-        </div>
-        <input
-          type="password"
-          placeholder="비밀번호"
-          className="input-style"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호 확인"
-          className="input-style"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-        />
-        <button className="next-button" onClick={() => navigate('/join2')}>다음</button>
-      </div>
-    </div>
+    <PageContainer >
+      <Header>
+        <BackIcon />
+        <PageName>회원가입</PageName>
+      </Header>
+      <TabContainer marginTop='20px' />
+      <IntroContainer>
+        <CatchPhraseContainer>
+          <CatchPhrase>
+            가정을 위한
+          </CatchPhrase>
+          <CatchPhrase>
+            공동소비 플랫폼
+          </CatchPhrase>
+
+          <HouseLogoContainer>
+            <HouseLogoIcon src={HouseLogo} />
+            <CatchPhrase color={theme.colors.mainColor}>
+              홈메이트
+            </CatchPhrase>
+          </HouseLogoContainer>
+        </CatchPhraseContainer>
+        <LogoIcon src={Logo} />
+      </IntroContainer>
+
+      <JoinInputContainer height="20px" placeholder='아이디'/>
+      <JoinInputContainer placeholder='비밀번호'/>
+      <JoinInputContainer placeholder='비밀번호 확인'/>
+      <JoinInputContainer placeholder='닉네임'/>
+      <NextButton>다음</NextButton>
+      {/* 
+      <Input></Input> */}
+    </PageContainer>
   );
 }
 

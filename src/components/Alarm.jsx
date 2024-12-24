@@ -7,8 +7,8 @@ const AlarmContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: auto;
     padding-top: 20px;
+    /* border: 1px solid #000; */
 `
 const EachAlarm = styled.div`
     border: 1px solid #EAEAEA;
@@ -20,7 +20,6 @@ const EachAlarm = styled.div`
     align-items: center;
     font-size: 12px;
     background-color: #F4F8FB;
-    margin-bottom: 15px;
     font-weight: bold;
 `
 const AlarmType = styled.div`

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import LogoImg from '../assets/Logo.png';
 import { LoginInputContainer } from '../components/Input';
 import Logo from '../assets/Logo.png';
-import '../styles/Login.css';
 import useIsMobile from '../hooks/LoginUi';
 import {LoginBgImg} from '../assets/icons/icons';
 

@@ -6,6 +6,7 @@ export const TabContainer = styled.div`
     height: auto;
     display: flex;
     flex-direction: row;
+    margin-top: ${(props) => props.marginTop};
     border-bottom: 1px solid ${({ theme }) => theme.colors.grayColor};
 `
 const EachTab = styled.div`

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+//로그인 화면 input
 export const LoginInputContainer = styled.input`
     width: 60%;
     height: 35px;
@@ -11,6 +12,8 @@ export const LoginInputContainer = styled.input`
     padding-left: 5px;
     cursor: text;
 `
+
+//회원가입 화면 input
 export const JoinInputContainer = styled.input`
     width: 80%;
     height: ${(props) => props.height};
@@ -21,12 +24,14 @@ export const JoinInputContainer = styled.input`
     border-bottom: ${(props) => props.borderBottom || "1px solid #B6B6B6"};
     background-color: transparent;
     margin-bottom: 35px;
+    padding: 7px 0px;
     cursor: text;
 
     &::placeholder {
-      color: #B6B6B6;
+      color: ${({theme}) => theme.colors.placeHolderColor};
     }
 `
+//아기 정보 화면 input
 export const BabyInfoInput = styled.button`
     width: 100%;
     height: 50px;
@@ -38,27 +43,10 @@ export const BabyInfoInput = styled.button`
     background-color: #FAFAFA;
     margin-top: ${(props) => props.marginTop};
     margin-bottom: 20px;
+    cursor: pointer;
 
     &:hover {
       background-color: #ebebeb9b;
       transition: background-color 0.3s ease;
     }
 `
-export const NextButton = styled.button`
-    width: 62%;
-    height: 50px;
-    border: 0.5px solid #C6C6C6;
-    background-color: #FCF9F4;
-    /* margin: 50px 0px 0px 0px; */
-    border-radius: 8px;
-    font-size: 16px;
-    color: #898989;
-    padding-left: 5px;
-    cursor: pointer;
-    margin-top: ${(props) => props.marginTop};
-
-    &:hover {
-      background-color: #EBEBEB;
-      transition: background-color 0.3s ease;
-    }
-` 

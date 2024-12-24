@@ -1,172 +1,151 @@
-import React from 'react'
-import styled from 'styled-components'
-import { PageContainer } from '../components/ScreenSizing'
-import { TabContainer } from '../components/Tab'
-import LogoImg from '../assets/Logo.png'
-import NavigationIcon from '../components/Home/NavigationIcon'
-import { CakeIcon, HeartIcon, AddressCheckIcon , ListCheckIcon} from '../assets/icons/icons'
-import Footer from '../components/Footer'
+import React, { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
+import Footer from "../components/Footer";
+import { ImageList } from "../data/ImageList";
+import NavigationIcon from "../components/Home/NavigationIcon";
+import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
+import { FireIcon, ShoppingBagIcon } from "../assets/icons/icons";
+import { useNavigate } from "react-router-dom";
 
-const PageName = styled.div`
+const PageContainer = styled.div`
+  ${makeCenterColumn}
   width: 100%;
   height: auto;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-`
-const LogoContainer = styled.div`
+`;
+
+const PageName = styled.div`
+  ${makeCenterColumn}
   width: 100%;
-  height: 200px;
-  align-items: center;
-  justify-content: center;
+  height: auto;
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+
+const Images = styled.div`
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-radius:10px;
+`;
+
+const ShowImage = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 1em;
-`
-const Title = styled.div`
   width: 100%;
-  height: 30px;
-  margin: 0 auto;
+  height: 300px;
+  transform: ${({ translateX }) => `translateX(${translateX}px)`};
+  transition: transform 0.4s ease-in-out;
+`;
+
+const Compartment = styled.div`
+  flex-shrink: 0;
+  width: 100%;
+  height: 300px;
+  font-size: 40px;
+  text-align: center;
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ContentTitle = styled.div`
+  width: 100%;
+  padding: 8px 12px;
   align-items: center;
-  justify-content: center;
   display: flex;
-  font-size: 24px;
-  font-weight: bold;
-  color: ${({theme} )=> theme.colors.mainColor};
+  justify-content: start;
+  font-weight: 600;
+  font-size: 20px;
 `
 const DashBoardContainer = styled.div`
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+  width: 100%;
+  height: 130px;
+  padding: 8px 12px;
+  ${makeCenterRow};
+  gap: 20px;
+  
 `
-const HotPostDashBoard = styled.div`
-    width: ${(props)=>props.width};
-    height: ${(props)=>props.height};
-    border: 1px solid #EAEAEA;
-    background-color: ${(props)=> props.backgroundColor};
-    border-radius: 5px;
-    padding-left: 5px;
-    margin-top: 1em;
+const DashBoard = styled.div`
+  ${makeCenterColumn}
+  width:50%;
+  height:100%;
+  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-direction: column;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
-const Text = styled.div`
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
-    color: ${(props) => props.color};
-    font-weight: ${(props) => props.fontWeight};
-    font-size: ${(props)=> props.fontSize};
-    margin: ${(props) => props.margin};
-`
-const PostsContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-bottom: 20px;
-`
-const HotPosts = styled.div`
-    background-color: #F4F8FB;
-    width: 40%;
-    height: ${(props) => props.height || '150px'};
-    border: 1px solid #EAEAEA;
-    margin: 2px;
-    padding: 10px;
-`
-const IconContainer = styled.div`
-    width: 100%;
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+  }
 `
 function Home() {
-  return (
+  const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스
+  const [slideWidth, setSlideWidth] = useState(0); // 슬라이드 너비
+  const slideRef = useRef(null); // 슬라이드 요소 참조
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 슬라이드 너비를 계산하여 설정
+    if (slideRef.current) {
+      setSlideWidth(slideRef.current.offsetWidth);
+    }
+    // 창 크기 변화 시 슬라이드 너비 재계산
+    const handleResize = () => {
+      if (slideRef.current) {
+        setSlideWidth(slideRef.current.offsetWidth);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    // 슬라이드 자동 이동
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageList.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [ImageList.length]);
+
+  const translateX = -currentIndex * slideWidth; // 슬라이드 이동 거리 계산
+  
+  const handleClick = (toWhere) => {
+    navigate(`/${toWhere}`)
+  }
+    return (
     <>
-    <PageContainer>
-        <PageName>홈</PageName>
-        <TabContainer/>
-
-        <LogoContainer>
-            <div>
-                <Title style={{justifyContent:'start'}}>가정을 위한</Title>
-                <Title>공동 소비 플랫폼</Title>
-            </div>
-            <img src={LogoImg} alt='LogoImg' width='150px' style={{marginLeft:'3em'}}></img>
-        </LogoContainer>
-
-        <TabContainer/>
-
-        <DashBoardContainer>
-            <HotPostDashBoard
-                width="90%"
-                height="100%"
-                backgroundColor='#FCF9F4'>
-                <Text width='90%' fontSize='16px' fontWeight='bold' margin= '1em 0em 1em 0em'>🔥 인기글</Text>
-                <PostsContainer>
-                    <HotPosts>
-                        <Text fontWeight='bold'>제목</Text>
-                        <Text fontSize='10px' color='#7C7C7C'>내용</Text>
-                    </HotPosts>
-                    <HotPosts>
-                        <Text fontWeight='bold'>제목</Text>
-                        <Text fontSize='10px' color='#7C7C7C'>내용</Text>
-                    </HotPosts>
-                </PostsContainer>
-            </HotPostDashBoard>
-        </DashBoardContainer>
-
-        <IconContainer>
-            <NavigationIcon
-                icon={<CakeIcon/>}
-                iconTitle={'D-Day'}>
-            </NavigationIcon>
-            <NavigationIcon
-                icon={<HeartIcon/>}
-                iconTitle={'관심글'}>
-            </NavigationIcon>
-            <NavigationIcon
-                icon={<AddressCheckIcon/>}
-                iconTitle={'베송지 확인'}>
-            </NavigationIcon>
-            <NavigationIcon
-                icon={<ListCheckIcon/>}
-                iconTitle={'이용 가이드'}>
-            </NavigationIcon>
-        </IconContainer>
-
-        <TabContainer/>
-
-        <DashBoardContainer>
-                <Text width='90%' fontSize='16px' fontWeight='bold' margin= '1em 0em 1em 0em'>최근 공동구매 글</Text>
-                <PostsContainer>
-                    <HotPosts height='50%'>
-                        <Text fontWeight='bold'>제목</Text>
-                        <Text fontSize='10px' color='#7C7C7C'>내용</Text>
-                    </HotPosts>
-                    <HotPosts height='50%'>
-                        <Text fontWeight='bold'>제목</Text>
-                        <Text fontSize='10px' color='#7C7C7C'>내용</Text>
-                    </HotPosts >
-                </PostsContainer>
-        </DashBoardContainer>
-
-    
-    </PageContainer>
-    <Footer></Footer>
+      <PageContainer>
+        <PageName>홈메이트</PageName>
+        <Images>
+          <ShowImage translateX={translateX}>
+            {ImageList.map((img, index) => (
+              <Compartment key={index} ref={index === 0 ? slideRef : null}>
+                <img src={img} alt={`슬라이드 이미지 ${index + 1}`} />
+              </Compartment>
+            ))}
+          </ShowImage>
+        </Images>
+        
+        <ContentTitle>대시보드</ContentTitle>
+            <DashBoardContainer>
+              <DashBoard onClick={() => handleClick('hotpost')}>
+                <NavigationIcon iconTitle='인기글' icon={<FireIcon />}/>
+              </DashBoard>
+              <DashBoard onClick={() => handleClick('purchase')}>
+                <NavigationIcon iconTitle='공동 구매' icon={<ShoppingBagIcon />}/>
+                </DashBoard>
+            </DashBoardContainer>
+      </PageContainer>
+      <Footer></Footer>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

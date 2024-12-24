@@ -1,41 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
+import { makeCenterColumn } from '../../styles/mixins'
 
 const Wrapper = styled.div`
-    width: 10%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    `
-const CircleContainer = styled.div`
-    width: 70%;
+    width: 18%;
     height: 70%;
-    margin-bottom: 10px;
-`
+    ${makeCenterColumn}
+    flex-direction: column;
+    `
 const Circle = styled.div`
+    ${makeCenterColumn}
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #F4F8FB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.05);
     box-shadow: 0 3px 10px rgba(112,136,210, 0.2);
-
-    &:hover {
-        background-color: #C8E8FF;
-    };
+    margin-bottom: 20px;
 `
 const Icon = styled.div`
+${makeCenterColumn}
     width: 70%;
     height: 70%;
 `
 const IconTitle = styled.div`
     width: 80%;
     height: 20%;
-    font-size: 13px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,16 +34,16 @@ const IconTitle = styled.div`
 
 function NavigationIcon({icon, iconTitle}) {
   return (
+    <>
     <Wrapper>
-        <CircleContainer>
             <Circle>
                 <Icon>
                     {icon}
                 </Icon>
             </Circle>
-        </CircleContainer>
-        <IconTitle>{iconTitle}</IconTitle>
     </Wrapper>
+    <IconTitle>{iconTitle}</IconTitle>
+</>
   )
 }
 
