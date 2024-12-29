@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import styled from 'styled-components'
 import { PageContainer } from '../components/ScreenSizing'
 import Alarm from '../components/Alarm'
-import { PlusIcon, CloseImg, ImageIcon } from '../assets/icons/icons'
+import { PlusIcon, CloseImg} from '../assets/icons/icons'
 import { Header } from '../components/Header'
-
 import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
 import { useNavigate } from 'react-router-dom'
+import { TabContainer } from '../components/Tab'
+
 
 const CommunityName = styled.div`
 ${makeCenterRow}
@@ -15,6 +16,7 @@ ${makeCenterRow}
   font-size: 16px;
   margin-right: 10px;
   font-weight: bold;
+  margin-top: 10px;
 `
 const CategotyContainer =  styled.div`
   width: 100%;
@@ -27,7 +29,7 @@ const CategoryBtn = styled.button`
   width: 10%;
   height: 100%;
   border-radius: 5px;
-  border: 2px solid #000;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   background-color: #fff;
   font-size: 0.8em;
   font-weight: bold;
@@ -50,16 +52,21 @@ const InputType = styled.div`
   font-weight: bold;
   margin-bottom: 10px;
 `
-const InputContent = styled.input`
+const InputContent = styled.textarea`
   width: 100%;
-  height: 40px;
+  height: ${(props) => props.height || '30px'};
   border-radius: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: ${({theme})=> theme.colors.inputContainerColor};
   padding-left: 7px;
+  resize: none;
+  font-family: "Pretendard-Regular" !important;
+  word-break: keep-all;
 
-  .placeholder {
-    color: ${({theme}) => theme.colors.placeHolderColor};
-  }
+  &::placeholder {
+  color: ${({theme})=> theme.colors.placeHolderColor};
+  font-size: 13px;
+  padding: 6px 0px;
+}
 `
 const ImageList = styled.div`
   display: flex;
@@ -67,62 +74,116 @@ const ImageList = styled.div`
   justify-content: start;
   align-items: center;
   width: 100%;
-  height: 150px;
-  border: 1px solid #000;
-
+  height: 90px;
+  gap:10px;
 `
 const ImgContainer= styled.div`
 ${makeCenterColumn}
-  width: 80%;
+  width: 10%;
   height: 100%;
-  border: 1px solid #000;
+  border: 1px solid ${({theme})=> theme.colors.placeHolderColor};
   border-radius: 6px;
   cursor: pointer;
 `
-const ImgAdd = styled.input`
-  width: 70%;
+const EachImage = styled.div`
+${makeCenterColumn}
+  width: 10%;
   height: 100%;
-  cursor: pointer;
-  border: none;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
 
-  input[type="file"]{
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
     overflow: hidden;
-    border: 0;
   }
 `
-const CloseIcon = styled.div`
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
+const ImgInput = styled.input`
+  width: 10%;
+  position: absolute;
+  opacity: 0;
+  z-index: 5;
 `
+const CloseIcon = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50%;
+`
+const SubmmitBtm = styled.button`
+  width: 60%;
+  height: 40px;
+  border-radius: 6px;
+  background-color: #3373BA;
+  margin: 40px 0px;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
 
+  &:hover {
+      background-color: #b2ceef;
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+
+    }
+`
 function Write() {
-  const [postImg,setPostImg] = useState([]);
-  const [previewImg, setPreviewImg] = useState([]);
+
+  const [showImg,setShowImg] = useState([]);
   const navigate = useNavigate();
   const handleClose = () => {    
     navigate('/home');
   }
-  const imageUrl = [];
-  const uploadImages = (e) => {
-    const ImageArr = e.tatget.files;
-    setPostImg(ImageArr);
 
-    for(let i =0; i< ImageArr.length; i++) {
-      const fileRead = new FileReader();
-      fileRead.onload = () => {
-        imageUrl[i] = fileRead.result;
-        setPreviewImg([...imageUrl]);
-        fileRead.readAsDataURL(ImageArr[i])
-      }
-    }
+  const uploadImages =  (e) => {
+    const ImageArr = Array.from(e.target.files);
+    const promises = ImageArr.map((img) => {
+      return new Promise((resolve, reject) => {
 
+        const fileRead = new FileReader();
+        fileRead.readAsDataURL(img); //이미지을 텍스트로 가공
+
+        fileRead.onload = () => {      //파일 읽는 게 성공할 시 실행되는 함수
+          resolve(fileRead.result);
+        }
+
+        fileRead.onerror = (error) => {
+          reject(error,"have a problem");
+        }
+    
+      });
+    });
+    Promise.all(promises)
+      .then((imageUrl) => {
+        setShowImg((prev) => [...prev, ...imageUrl]);
+      })
+      .catch((error) => {
+        console.error("error",error);
+      })
+      };
+
+  //이미지삭제
+  const handleDeleteImg = (deletedIndex) => {
+    if(deletedIndex) {
+    const updatedImg = showImg.filter((item, index) => deletedIndex!== index)
+    setShowImg(updatedImg);
   }
-
+}
+  
   return (
     <PageContainer style={{display:'flex' , justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
       <Header>
@@ -152,26 +213,82 @@ function Write() {
           <InputType>사진</InputType>
           <ImageList>
           <ImgContainer>
-            <PlusIcon onload={uploadImages}/>
-            <ImgAdd type='file'></ImgAdd>
+          <ImgInput multiple={true} type='file' onChange={uploadImages} />
+          <div style={{position: 'relative', zIndex:'2'}}>
+              <PlusIcon/>
+          </div>
           </ImgContainer>
-            {previewImg.map((imgSrc,index) => (
-                <ImgContainer key={index}>
-                  <img src={imgSrc}></img>
-                  </ImgContainer>
+            {showImg.map((imgSrc,index) => (
+              <EachImage key={index}>                  
+                <CloseIcon onClick={() => handleDeleteImg(index)}>
+                  <CloseImg/>
+                </CloseIcon>
+                <img src={imgSrc} alt={`img ${index}`}></img>
+              </EachImage>
             ))}
           </ImageList>
         </InputContainer>
 
+        <InputContainer>
+          <InputType>구매 신청 시작 날짜</InputType>
+          <InputContent placeholder='YYYY-MM-DD부터' />
+        </InputContainer>
 
+        <InputContainer>
+          <InputType>구매 신청 마감 날짜</InputType>
+          <InputContent placeholder='YYYY-MM-DD까지' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>구매 신청 마감 시간</InputType>
+          <InputContent placeholder='00:00까지' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>최소 충족 인원</InputType>
+          <InputContent placeholder='숫자만 입력해주세요.' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>공동 구매 내용</InputType>
+          <InputContent placeholder='자세한 설명' height='500px' />
+        </InputContainer>
+
+        <TabContainer marginTop='50px' marginBottom='10px'/>
+
+        <CommunityName>이메일 내용 작성하기</CommunityName>
+
+        <Alarm type='안내' title='아래는 공동 구매가 성공적으로 진행될 때, 소비자에게 소식을 알리는 이메일 내용 입력칸입니다.'></Alarm>
+
+        <InputContainer>
+          <InputType>이메일 제목</InputType>
+          <InputContent placeholder='제목' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>입금받으실 은행</InputType>
+          <InputContent placeholder='은행명' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>결제 마감 날짜</InputType>
+          <InputContent placeholder='YYYY-MM-DD까지' />
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>판매자님 전화번호</InputType>
+          <InputContent 
+            placeholder='숫자만 입력해주세요'/>
+        </InputContainer>
+
+        <InputContainer>
+          <InputType>문의 받으실 이메일</InputType>
+          <InputContent 
+            placeholder='이메일'/>
+        </InputContainer>
+
+        <SubmmitBtm>작성 완료</SubmmitBtm>
         
-        {/* <CircleWrapper>
-          <CircleContainer>
-            <Circle>
-              <ImageIcon></ImageIcon>
-            </Circle>
-          </CircleContainer>
-        </CircleWrapper> */}
     </PageContainer>
 
 

@@ -47,7 +47,6 @@ const StyledDatePicker = styled(DatePicker)`
 
 function BabyStatus() {
     const navigate = useNavigate();
-    const isMobile = useIsMobile();
     const [selectedDate, setSelectedDate]= useState(new Date());
       const [birthDate, setBirthDate] = useState('');
   const [isValid, setIsValid] = useState(true);
