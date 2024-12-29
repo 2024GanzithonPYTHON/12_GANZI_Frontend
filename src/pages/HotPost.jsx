@@ -1,18 +1,33 @@
 import React from 'react'
 import { PageContainer } from '../components/ScreenSizing';
+import {BackIcon} from '../assets/icons/icons'
 import styled from 'styled-components';
 import Alarm from '../components/Alarm';
 import Post from '../components/Post';
 import Footer from '../components/Footer';
 import WriteImg from '../assets/WriteImg.png';
 import { Header } from '../components/Header';
+import { makeCenterColumn } from '../styles/mixins';
 
-const WriteIcon = styled.img`
+const CommunityName = styled.div`
+  width: 100%;
+  height: auto;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const WriteIcon = styled.div`
+  ${makeCenterColumn}
+  position: fixed; /* 화면에 고정 */
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.mainColor};
   width: 50px;
-  position: absolute; 
-  bottom: 80px; 
-  right: 20px; 
+  height: 50px;
   cursor: pointer;
+  bottom: 100px; /* 화면 아래에서의 거리 */
+  right: 300px; /* 화면 오른쪽에서의 거리 */
 
   @media (max-width: 430px) {
   width: 40px;
@@ -25,7 +40,9 @@ function HotPost() {
     <>
     <PageContainer>
     <Header fontWeight="bold">
-      인기글 게시판
+        <BackIcon/>
+        <CommunityName>인기글 게시판</CommunityName>
+
       </Header>
         <Alarm type='안내' title='커뮤니티 이용 가이드'/>
         <Alarm type='공지' title='개인정보 처리방침'/>
