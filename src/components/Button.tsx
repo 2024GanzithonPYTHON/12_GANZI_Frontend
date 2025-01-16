@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import {CommonProps } from '../styles/CommonProps';
 
-export const NextButton = styled.button`
+export const NextButton = styled.button<CommonProps>`
     width: 62%;
     height: 50px;
     border: 0.5px solid #C6C6C6;

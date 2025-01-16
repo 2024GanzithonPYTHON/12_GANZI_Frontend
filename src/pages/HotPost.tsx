@@ -1,13 +1,12 @@
 import React from 'react'
 import { PageContainer } from '../components/ScreenSizing';
-import {BackIcon} from '../assets/icons/icons'
+import {BackIcon, PlusIcon} from '../assets/icons/icons'
 import styled from 'styled-components';
 import Alarm from '../components/Alarm';
 import Post from '../components/Post';
 import Footer from '../components/Footer';
-import WriteImg from '../assets/WriteImg.png';
-import { Header } from '../components/Header';
 import { makeCenterColumn } from '../styles/mixins';
+import { Header } from '../components/Header';
 
 const CommunityName = styled.div`
   width: 100%;
@@ -39,7 +38,7 @@ function HotPost() {
   return (
     <>
     <PageContainer>
-    <Header fontWeight="bold">
+    <Header fontWeight='bold'>
         <BackIcon/>
         <CommunityName>인기글 게시판</CommunityName>
 
@@ -47,8 +46,9 @@ function HotPost() {
         <Alarm type='안내' title='커뮤니티 이용 가이드'/>
         <Alarm type='공지' title='개인정보 처리방침'/>
         <Post title='제목' content='이러이러한 내용' nickname='yunhae' time='2024.11.20'/>
-        <WriteIcon src={WriteImg} alt="WriteImg"></WriteIcon>
-    </PageContainer>
+        <WriteIcon>
+          <PlusIcon/>
+        </WriteIcon>    </PageContainer>
     <Footer></Footer>
   </>
   )

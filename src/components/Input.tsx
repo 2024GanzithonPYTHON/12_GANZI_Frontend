@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CommonProps } from '../styles/CommonProps'
 
 //로그인 화면 input
 export const LoginInputContainer = styled.input`
@@ -21,7 +22,6 @@ export const JoinInputContainer = styled.input`
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: ${(props) => props.borderBottom || "1px solid #B6B6B6"};
     background-color: transparent;
     margin-bottom: 35px;
     padding: 7px 0px;
@@ -32,7 +32,7 @@ export const JoinInputContainer = styled.input`
     }
 `
 //아기 정보 화면 input
-export const BabyInfoInput = styled.button`
+export const BabyInfoInput = styled.button<CommonProps>`
     width: 100%;
     height: 50px;
     border-radius: 20px;
@@ -41,7 +41,7 @@ export const BabyInfoInput = styled.button`
     font-size: 13px;
     box-shadow: 0 10px 30px rgba(112, 136, 210, 0.1);
     background-color: #FAFAFA;
-    margin-top: ${(props) => props.marginTop};
+    margin-top: ${(props) => props.marginTop };
     margin-bottom: 20px;
     cursor: pointer;
 

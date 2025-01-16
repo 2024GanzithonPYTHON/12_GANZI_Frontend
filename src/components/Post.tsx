@@ -35,7 +35,7 @@ const Date = styled.div`
     color: #7C7C7C;
     font-size: 12px;
 `
-function Post({title, content,nickname, time}) {
+function Post({title, content,nickname, time} :{title: string, content: string, nickname: string, time: string}) {
   return (
     <PostContainer>
         <EachPost>

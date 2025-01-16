@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png'; // 로고 이미지 파일 경로
-import '../styles/StartPage.css'; // CSS 파일 분리
 
 // 시작 페이지 컴포넌트
 function StartPage() {

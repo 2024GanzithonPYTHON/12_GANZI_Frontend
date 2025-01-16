@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TabContainer } from '../components/Tab';
+import { TabBar } from '../components/Tab';
 import { PageContainer } from '../components/ScreenSizing';
 import { NextButton } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { CommonProps } from '../styles/CommonProps';
 
 const PageName = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ const Input = styled.input`
   font-size: 12px;
 
 `
-const InputExplanation = styled.div`
+const InputExplanation = styled.div<CommonProps>`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -50,7 +51,7 @@ function BabyName() {
   return (
     <PageContainer style={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection :'column'}}>
     <PageName>회원가입</PageName>
-    <TabContainer />
+    <TabBar />
     <InputExplanation fontSize='20px' marginTop='40px'>아기의 이름을 알려주세요</InputExplanation>
     <InputExplanation fontSize='13px' marginTop='30px'>※ 추후에 변경할 수 없습니다. </InputExplanation>
     <Input placeholder='이름을 입력해주세요'/>

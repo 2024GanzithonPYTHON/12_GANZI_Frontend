@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { makeCenterColumn } from '../../styles/mixins'
 
@@ -32,7 +31,7 @@ const IconTitle = styled.div`
     font-weight: bold;
     `
 
-function NavigationIcon({icon, iconTitle}) {
+function NavigationIcon({icon, iconTitle} : {icon: any, iconTitle: string}) {
   return (
     <>
     <Wrapper>

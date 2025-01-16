@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components';
 
 const AlarmContainer = styled.div`
@@ -37,7 +36,7 @@ const AlarmTitle = styled.div`
     color: #7C7C7C;
 `
 
-function Alarm({type, title}) {
+function Alarm({type, title} : {type: string, title: string}) {
   return (
     <AlarmContainer>
         <EachAlarm>

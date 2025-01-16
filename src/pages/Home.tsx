@@ -6,6 +6,7 @@ import NavigationIcon from "../components/Home/NavigationIcon";
 import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
 import { FireIcon, ShoppingBagIcon } from "../assets/icons/icons";
 import { useNavigate } from "react-router-dom";
+import { CommonProps } from "../styles/CommonProps";
 
 const PageContainer = styled.div`
   ${makeCenterColumn}
@@ -29,7 +30,7 @@ const Images = styled.div`
   border-radius:10px;
 `;
 
-const ShowImage = styled.div`
+const ShowImage = styled.div<CommonProps>`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -87,7 +88,7 @@ const DashBoard = styled.div`
 function Home() {
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스
   const [slideWidth, setSlideWidth] = useState(0); // 슬라이드 너비
-  const slideRef = useRef(null); // 슬라이드 요소 참조
+  const slideRef = useRef<HTMLDivElement>(null); // 슬라이드 요소 참조
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -112,13 +113,14 @@ function Home() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [ImageList.length]);
+  }, []);
 
   const translateX = -currentIndex * slideWidth; // 슬라이드 이동 거리 계산
   
-  const handleClick = (toWhere) => {
+  const handleClick = (toWhere : string) => {
     navigate(`/${toWhere}`)
   }
+
     return (
     <>
       <PageContainer>

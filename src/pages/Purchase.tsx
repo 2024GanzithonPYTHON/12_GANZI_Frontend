@@ -38,7 +38,7 @@ function Purchase() {
   return (
     <>
         <PageContainer>
-          <Header>
+          <Header >
             <BackIcon/>
             <CommunityName>공동구매</CommunityName>
           </Header>

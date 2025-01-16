@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import LogoImg from '../assets/Logo.png';
 import { LoginInputContainer } from '../components/Input';
 import Logo from '../assets/Logo.png';
-import useIsMobile from '../hooks/LoginUi';
 import {LoginBgImg} from '../assets/icons/icons';
 
 // 스타일 정의
@@ -71,24 +70,24 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
 
-  if (!isMobile) {
-    // 웹 버전
-    return (
-      <Background>
-        <PageContainer>
-          <LogoContainer>
-            <img src={LogoImg} alt="Logo" width="150px" />
-          </LogoContainer>
-          <Title>로그인</Title>
-          <LoginInputContainer placeholder="아이디" />
-          <LoginInputContainer placeholder="비밀번호" />
-          <Button>로그인</Button>
-        </PageContainer>
-      </Background>
-    );
-  }
+  // if (!isMobile) {
+  //   // 웹 버전
+  //   return (
+  //     <Background>
+  //       <PageContainer>
+  //         <LogoContainer>
+  //           <img src={LogoImg} alt="Logo" width="150px" />
+  //         </LogoContainer>
+  //         <Title>로그인</Title>
+  //         <LoginInputContainer placeholder="아이디" />
+  //         <LoginInputContainer placeholder="비밀번호" />
+  //         <Button>로그인</Button>
+  //       </PageContainer>
+  //     </Background>
+  //   );
+  // }
 
   // 모바일 버전
   return (

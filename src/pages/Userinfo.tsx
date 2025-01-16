@@ -1,9 +1,9 @@
-import {React} from 'react'
 import styled from 'styled-components'
-import { TabContainer } from '../components/Tab';
+import { TabBar } from '../components/Tab';
 import { PageContainer } from '../components/ScreenSizing';
 import { NextButton } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { CommonProps } from '../styles/CommonProps';
 
 const PageName = styled.div` //conponent
   width: 100%;
@@ -14,7 +14,7 @@ const PageName = styled.div` //conponent
   justify-content: center;
   margin-bottom: 10px;
 `
-const InputExplanation = styled.div`
+const InputExplanation = styled.div<CommonProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -56,13 +56,13 @@ function BabyStatus() {
   return (
     <PageContainer>
         <PageName>회원가입</PageName>
-        <TabContainer />
+        <TabBar />
         <InputExplanation fontSize='20px' marginTop='40px'> 배송지와 이메일을 알려주세요</InputExplanation>
         <InputExplanation fontSize='13px' marginTop='15px'>※ 추후에 변경할 수 없습니다. </InputExplanation>
         <Input placeholder='📦 배송지를 입력해주세요' className='input-with-svg'></Input>
         <Input placeholder='📧 이메일을 입력해주세요'>
         </Input>
-        <NextButton marginTop='11em' onClick={handleNext} disabled={''}>시작하기</NextButton>
+        <NextButton marginTop='11em' onClick={handleNext}>시작하기</NextButton>
     </PageContainer>
   )
 }

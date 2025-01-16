@@ -4,7 +4,7 @@ import { PageContainer } from '../components/ScreenSizing';
 import { BackIcon } from '../assets/icons/icons'
 import Logo from '../assets/Logo.png';
 import HouseLogo from '../assets/HouseLogo.png'
-import { TabContainer } from '../components/Tab';
+import { TabBar } from '../components/Tab';
 import theme from '../utils/theme/Theme';
 import { JoinInputContainer} from '../components/Input';
 import { NextButton } from '../components/Button';
@@ -69,7 +69,7 @@ function Join() {
         <BackIcon />
         <PageName>회원가입</PageName>
       </Header>
-      <TabContainer marginTop='20px' />
+      <TabBar marginTop='20px' />
       <IntroContainer>
         <CatchPhraseContainer>
           <CatchPhrase>

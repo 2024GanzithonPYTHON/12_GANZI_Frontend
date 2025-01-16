@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { PageContainer } from '../components/ScreenSizing'
 import Alarm from '../components/Alarm'
@@ -6,8 +6,8 @@ import { PlusIcon, CloseImg} from '../assets/icons/icons'
 import { Header } from '../components/Header'
 import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
 import { useNavigate } from 'react-router-dom'
-import { TabContainer } from '../components/Tab'
-
+import { TabBar } from '../components/Tab'
+import { CommonProps } from '../styles/CommonProps'
 
 const CommunityName = styled.div`
 ${makeCenterRow}
@@ -52,7 +52,7 @@ const InputType = styled.div`
   font-weight: bold;
   margin-bottom: 10px;
 `
-const InputContent = styled.textarea`
+const InputContent = styled.textarea<CommonProps>`
   width: 100%;
   height: ${(props) => props.height || '30px'};
   border-radius: 6px;
@@ -142,34 +142,42 @@ const SubmmitBtm = styled.button`
     }
 `
 function Write() {
-
-  const [showImg,setShowImg] = useState([]);
+  const [showImg,setShowImg] = useState<string[]>([]);
   const navigate = useNavigate();
   const handleClose = () => {    
     navigate('/home');
   }
 
-  const uploadImages =  (e) => {
-    const ImageArr = Array.from(e.target.files);
+  const uploadImages =  (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(!e.target.files) {
+      return;
+    } 
+      const ImageArr = Array.from(e.target.files);
+    
     const promises = ImageArr.map((img) => {
-      return new Promise((resolve, reject) => {
+      return new Promise<string>((resolve, reject) => {
 
         const fileRead = new FileReader();
         fileRead.readAsDataURL(img); //이미지을 텍스트로 가공
 
-        fileRead.onload = () => {      //파일 읽는 게 성공할 시 실행되는 함수
-          resolve(fileRead.result);
+        fileRead.onload = () => {  //파일 읽는 게 성공할 시 실행되는 함수
+        resolve(fileRead.result as string ); //resolve() : promise 상태를 성공으로 바꾸고 값을 반환하는 함수 
         }
 
         fileRead.onerror = (error) => {
-          reject(error,"have a problem");
+          reject(error);
         }
     
       });
     });
-    Promise.all(promises)
+
+    console.log(promises);
+    
+
+    Promise.all(promises) //PromiseResult 값만 배열로 반환
       .then((imageUrl) => {
-        setShowImg((prev) => [...prev, ...imageUrl]);
+        console.log('imageUrl :', imageUrl);  //["data:image/png;base64,...", "data:image/png;base64,..."]
+        setShowImg((prev: string[]) => [...prev, ...imageUrl]);
       })
       .catch((error) => {
         console.error("error",error);
@@ -177,7 +185,7 @@ function Write() {
       };
 
   //이미지삭제
-  const handleDeleteImg = (deletedIndex) => {
+  const handleDeleteImg = (deletedIndex: number) => {
     if(deletedIndex) {
     const updatedImg = showImg.filter((item, index) => deletedIndex!== index)
     setShowImg(updatedImg);
@@ -254,7 +262,7 @@ function Write() {
           <InputContent placeholder='자세한 설명' height='500px' />
         </InputContainer>
 
-        <TabContainer marginTop='50px' marginBottom='10px'/>
+        <TabBar marginTop='50px' marginBottom='10px'/>
 
         <CommunityName>이메일 내용 작성하기</CommunityName>
 
@@ -295,4 +303,4 @@ function Write() {
   )
 }
 
-export default Write
+export default Write;
