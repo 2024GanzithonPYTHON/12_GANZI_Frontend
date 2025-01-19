@@ -170,13 +170,10 @@ function Write() {
     
       });
     });
-
-    console.log(promises);
     
-
     Promise.all(promises) //PromiseResult 값만 배열로 반환
       .then((imageUrl) => {
-        console.log('imageUrl :', imageUrl);  //["data:image/png;base64,...", "data:image/png;base64,..."]
+        // console.log('imageUrl :', imageUrl);  //["data:image/png;base64,...", "data:image/png;base64,..."]
         setShowImg((prev: string[]) => [...prev, ...imageUrl]);
       })
       .catch((error) => {

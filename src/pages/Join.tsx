@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState } from 'react';
 import styled from 'styled-components';
 import { PageContainer } from '../components/ScreenSizing';
 import { BackIcon } from '../assets/icons/icons'
@@ -8,6 +8,11 @@ import { TabBar } from '../components/Tab';
 import theme from '../utils/theme/Theme';
 import { JoinInputContainer} from '../components/Input';
 import { NextButton } from '../components/Button';
+import {useMutation} from '@tanstack/react-query';
+import instance from '../api/instance';
+import Modal from '../components/Modal/Modal';
+import { useNavigate } from 'react-router-dom';
+
 
 const Header = styled.div` //conponent
   width: 100%;
@@ -61,9 +66,86 @@ const HouseLogoIcon = styled.img`
     width: 20%;
     height: 20%;
 `
+interface SignUpData {
+  username: string;
+  password: string;
+  password_confirm: string;
+  nickname: string;
+}
 
 function Join() {
-  return (
+  const navigate = useNavigate();
+  const [joinData, setJoinData] = useState<SignUpData>({
+    username: '',
+    password: '',
+    password_confirm:'',
+    nickname: '',
+  });
+
+  const [modalState, setModalState] = useState({ 
+    isOpen: false, 
+    title: "", 
+    message: "",
+    destination: false,
+    endPoint: "",});
+
+  
+  const mutation = useMutation<void, Error, SignUpData>({
+    mutationFn: (data) => instance.post("/accounts/signup/", data),
+    onMutate: () => {
+      setModalState({
+        isOpen: true,
+        title: "처리 중",
+        message: "회원가입 요청을 처리하고 있습니다.",
+        destination: false,
+        endPoint: ""
+      });
+    },
+    onSuccess: () => {
+      setModalState({
+        isOpen: true,
+        title: "회원가입 완료!",
+        message: "홈메이트에 오신 것을 환영합니다. 🎉",
+        destination: true,
+        endPoint: '/'
+      });
+      
+      navigate('/')
+    },
+    onError: (error) => {
+      setModalState({
+        isOpen: true,
+        title: "문제가 발생했습니다",
+        message: error.message || "회원가입 요청 중 오류가 발생했습니다.",
+        destination: false,
+        endPoint: ""
+      });
+    },
+  });
+
+  const handleInputInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //joinData가 객체 형태이므로 저장도 객체 형태로 키와 값쌍으로 연결시켜서 저장해주어야 한다.
+    const {name, value} = e.target;
+
+    setJoinData((prev) => ({
+      ...prev,
+      [name] : value,
+    }));
+  }
+
+  const handleSubmit = () => {
+    mutation.mutate(joinData);
+  };
+
+    return (
+    <>
+    <Modal
+        isOpen={modalState.isOpen}
+        title={modalState.title}
+        message={modalState.message}
+        destination={modalState.destination}
+        onClose={() => setModalState({ isOpen: false, title: "", message: "", destination: false, endPoint: ""})}
+      />
     <PageContainer >
       <Header>
         <BackIcon />
@@ -89,15 +171,19 @@ function Join() {
         <LogoIcon src={Logo} />
       </IntroContainer>
 
-      <JoinInputContainer height="20px" placeholder='아이디'/>
-      <JoinInputContainer placeholder='비밀번호'/>
-      <JoinInputContainer placeholder='비밀번호 확인'/>
-      <JoinInputContainer placeholder='닉네임'/>
-      <NextButton>다음</NextButton>
+      <JoinInputContainer height="20px" placeholder='아이디' value={joinData.username} name = 'username' onChange={handleInputInfo}/>
+      <JoinInputContainer type= 'password' placeholder='비밀번호' value={joinData.password} name ='password' onChange={handleInputInfo}/>
+      <JoinInputContainer type= 'password' placeholder='비밀번호 확인' value={joinData.password_confirm} name='password_confirm' onChange={handleInputInfo}/>
+      <JoinInputContainer placeholder='닉네임' value={joinData.nickname} name='nickname' onChange={handleInputInfo}/>
+
+      <NextButton onClick={handleSubmit}>완료</NextButton>
       {/* 
       <Input></Input> */}
     </PageContainer>
-  );
+      
+</>
+    )
 }
+
 
 export default Join;
