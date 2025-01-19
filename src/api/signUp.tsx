@@ -1,20 +1,19 @@
-// import instance from "./instance";
+import instance from "./instance";
 
-// export const signUp = async ({username, password, password_confirm, nickname}) => {
+export const signUp = async ({username, password} : {username: string, password: string}) => {
     
-//     const UserInfo = {
-//         username,
-//         password,
-//         password_confirm,
-//         nickname
-//     };
+    const UserInfo = {
+        username,
+        password
 
-//     try {
-//         const response = await instance.post(`/accounts/signup/`, UserInfo)
+    };
 
-//         return response.data;
-//     }
-//     catch (error) {
-//         throw error;
-//     }
-// }
+    try {
+        const response = await instance.post(`/accounts/login/`, UserInfo)
+
+        return response.data;
+    }
+    catch (error) {
+        throw error;
+    }
+}

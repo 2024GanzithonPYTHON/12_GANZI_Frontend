@@ -57,10 +57,10 @@ const CloseButton = styled(NextButton)`
 
 interface ModalProps {
     isOpen: boolean;
-    title: string;
-    message: string;
+    title?: string;
+    message?: string;
     onClose: () => void;
-    destination: boolean;
+    destination?: boolean;
     endpoint?: string
 }
 

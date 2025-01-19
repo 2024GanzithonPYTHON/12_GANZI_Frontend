@@ -2,6 +2,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import LogoImg from '../assets/Logo.png';
+import { useMutation } from '@tanstack/react-query';
+import instance from '../api/instance';
+import Modal from '../components/Modal/Modal';
+import { AxiosResponse } from "axios";
 
 const Background = styled.div`
   margin: 0;
@@ -110,16 +114,92 @@ const SignupContainer = styled.div`
   }
 `;
 
+interface userInfo {
+  username: string,
+  password:string
+}
+
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [LoginData, setLoginData] = useState<userInfo>({
+    username:'',
+    password:''
+  });
+
+  const [modalState, setModalState] = useState({ 
+    isOpen: false, 
+    title: "", 
+    message: "",
+    destination: false,
+    endPoint: "",});
 
   const handleLogin = () => {
-    console.log('로그인 시도:', { username, password });
+    mutation.mutate(LoginData);
   };
 
+  const handleLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //joinData가 객체 형태이므로 저장도 객체 형태로 키와 값쌍으로 연결시켜서 저장해주어야 한다.
+    const {name, value} = e.target;
+
+    setLoginData((prev) => ({
+      ...prev,
+      [name] : value,
+    }));
+      }
+
+  const mutation = useMutation<{ access: string; refresh: string }, Error, userInfo>({
+    mutationFn: (LoginRequest: userInfo) => {
+      return instance
+      .post<{access: string, refresh: string}>('/accounts/login/',LoginRequest)
+      .then((response) => response.data)
+    },
+    
+    onMutate: () => {
+      setModalState({
+        isOpen: true,
+        title: "처리 중",
+        message: "로그인 요청을 처리하고 있습니다.",
+        destination: false,
+        endPoint: ""
+      });
+    },
+
+    onSuccess: (response) => {
+      localStorage.setItem('access', response.access);
+      localStorage.setItem("refresh", response.refresh);
+
+      setModalState({
+        isOpen: true,
+        title: "로그인 완료!",
+        message: "홈메이트에 오신 것을 환영합니다. 🎉",
+        destination: true,
+        endPoint: 'home'
+      });
+      setInterval(() => {
+        navigate('/home')
+      }, 1000)
+    },
+    onError: (error) => {
+      setModalState({
+        isOpen: true,
+        title: "문제가 발생했습니다",
+        message: error.message || "-로그인 요청 중 오류가 발생했습니다.",
+        destination: false,
+        endPoint: ""
+      });
+    },
+
+  });
+
   return (
+    <>
+        <Modal
+        isOpen={modalState.isOpen}
+        title={modalState.title}
+        message={modalState.message}
+        destination={modalState.destination}
+        onClose={() => setModalState({ isOpen: false, title: "", message: "", destination: false, endPoint: ""})}
+      />
     <Background>
       <Container>
         <LogoContainer>
@@ -128,15 +208,17 @@ function Login() {
         <Title>로그인</Title>
         <Input
           type="text"
+          name='username'
           placeholder="아이디"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={LoginData.username}
+          onChange={handleLoginInfo}
         />
         <Input
           type="password"
+          name='password'
           placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={LoginData.password}
+          onChange={handleLoginInfo}
         />
         <Button onClick={handleLogin}>로그인</Button>
         <LinkContainer>
@@ -152,6 +234,7 @@ function Login() {
         </SignupContainer>
       </Container>
     </Background>
+    </>
   );
 }
 
