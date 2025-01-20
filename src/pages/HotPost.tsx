@@ -42,8 +42,6 @@ function HotPost() {
     queryFn: fetchBlog,
   });
      
-  console.log(data);
-  
   interface BlogContent {
     title:string;
     nickname: string;
