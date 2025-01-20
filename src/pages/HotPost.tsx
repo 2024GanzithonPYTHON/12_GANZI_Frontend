@@ -1,4 +1,3 @@
-import React from 'react'
 import { PageContainer } from '../components/ScreenSizing';
 import {BackIcon, PlusIcon} from '../assets/icons/icons'
 import styled from 'styled-components';
@@ -7,6 +6,8 @@ import Post from '../components/Post';
 import Footer from '../components/Footer';
 import { makeCenterColumn } from '../styles/mixins';
 import { Header } from '../components/Header';
+import {useQuery } from '@tanstack/react-query';
+import { fetchBlog } from '../api/FetchBlog';
 
 const CommunityName = styled.div`
   width: 100%;
@@ -35,6 +36,21 @@ const WriteIcon = styled.div`
 }
 `
 function HotPost() {
+  
+  const {isLoading, data} = useQuery({
+    queryKey: ['getBlogContent'],
+    queryFn: fetchBlog,
+  });
+     
+  console.log(data);
+  
+  interface BlogContent {
+    title:string;
+    nickname: string;
+    date: string;
+    body: string;
+  }
+
   return (
     <>
     <PageContainer>
@@ -42,13 +58,33 @@ function HotPost() {
         <BackIcon/>
         <CommunityName>인기글 게시판</CommunityName>
 
-      </Header>
-        <Alarm type='안내' title='커뮤니티 이용 가이드'/>
-        <Alarm type='공지' title='개인정보 처리방침'/>
-        <Post title='제목' content='이러이러한 내용' nickname='yunhae' time='2024.11.20'/>
-        <WriteIcon>
+      </Header>        
+
+      <Alarm type='안내' title='커뮤니티 이용 가이드'/>
+      <Alarm type='공지' title='개인정보 처리방침'/>
+      {isLoading ? (
+        "Loading"
+      ) : (
+       <>
+        {data.map((item:BlogContent) => {
+          return (
+          <>  
+          <Post 
+            title={item.title}
+            content={item.body}
+            nickname={item.nickname}
+            time={item.date}/>
+        </>
+          )})}
+                <WriteIcon>
           <PlusIcon/>
-        </WriteIcon>    </PageContainer>
+        </WriteIcon>    
+</>
+
+      
+      )}
+  
+      </PageContainer>
     <Footer></Footer>
   </>
   )
