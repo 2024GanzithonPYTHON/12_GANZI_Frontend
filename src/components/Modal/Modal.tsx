@@ -1,6 +1,6 @@
 // ModalWrapper: 모달의 배경
 // ModalContent: 모달의 내부 컨텐츠
-import React from 'react';
+
 import styled from 'styled-components';
 import { NextButton } from '../Button';
 import { useNavigate } from 'react-router-dom';
@@ -59,22 +59,31 @@ interface ModalProps {
     isOpen: boolean;
     title?: string;
     message?: string;
-    onClose: () => void;
-    destination?: boolean;
-    endpoint?: string
+    isButton?: boolean;
+    onClose:() => void;
+    endpoint?: string;
+    btnContent?: string;
 }
 
-const Modal = ({ isOpen, title, message, onClose, destination, endpoint}: ModalProps) => {
-const navigate = useNavigate();
-
-const handleSubmit = () => {
-    if (destination && endpoint) {
-      navigate(`/${endpoint}`); // endpoint를 직접 참조
-    }
-    onClose(); // 모달 닫기
-  };
+const Modal = ({ 
+    isOpen, 
+    title, 
+    message, 
+    isButton,
+    onClose,
+    endpoint,
+    btnContent, 
+}: ModalProps
+) => {
+  const navigate = useNavigate();
   
-
+  const handleConfirm = (endpoint : string) => {
+      if (endpoint) {
+          onClose();
+          navigate(`${endpoint}`);
+        }
+    };
+  
   if (!isOpen) return null;
 
   return (
@@ -82,9 +91,12 @@ const handleSubmit = () => {
       <ModalContent>
         <ModalTitle>{title}!</ModalTitle>
         <ModalMessage>{message}</ModalMessage>
-        <CloseButton onClick={handleSubmit}>
-            {destination && endpoint ? `${endpoint}로` : "확인"}
-        </CloseButton>
+        {isButton ? 
+          <CloseButton onClick={() => handleConfirm(endpoint!)}>
+            {btnContent}
+          </CloseButton>  
+          : null
+        }
       </ModalContent>
     </ModalWrapper>
   );

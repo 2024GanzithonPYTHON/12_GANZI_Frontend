@@ -10,7 +10,8 @@ import BabyName from '../../pages/BabyName';
 import BabyRelation from '../../pages/BabyRelation';
 import BabyStatus from '../../pages/BabyStatus';
 import Home from '../../pages/Home';
-import Write from '../../pages/Write';
+import PurchaseWrite from '../../pages/PurchaseWrite';
+import HotIssueWrite from '../../pages/HotIssueWrite';
 
 export const routes = [
     {path: '/' , element: <Start/>},
@@ -24,7 +25,8 @@ export const routes = [
     {path: '/babybday' , element: <BabyBday/>},
     {path: '/babyrelation', element: <BabyRelation/>},
     {path: '/babyname' , element: <BabyName/>},
-    {path: '/write', element:<Write/>}
+    {path: '/purchasewrite', element:<PurchaseWrite/>},
+    {path: '/hotissuewrite', element:<HotIssueWrite/>},
 ]
 
 const RouteSetting = () => (

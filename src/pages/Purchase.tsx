@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { PageContainer } from '../components/ScreenSizing';
 import { PlusIcon, BackIcon} from '../assets/icons/icons'
@@ -9,6 +8,7 @@ import { Header } from '../components/Header'
 import { makeCenterColumn } from '../styles/mixins';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPurchase } from '../api/FetchPurcahse';
+import { useNavigate } from 'react-router-dom';
 
 const CommunityName = styled.div`
   width: 100%;
@@ -37,7 +37,7 @@ const WriteIcon = styled.div`
 }
 `
 function Purchase() {
-
+  const navigate = useNavigate();
   const {isLoading, data} = useQuery({
     queryKey : ["getPurchase"], 
     queryFn : fetchPurchase})
@@ -47,7 +47,6 @@ function Purchase() {
     nickname: string;
     date: string;
     body: string;
-    
   }
   
   return (
@@ -77,11 +76,8 @@ function Purchase() {
           <PlusIcon/>
         </WriteIcon>    
 </>
-
-      
       )}
-            <Post title='이런저런제목' content='이러이러한 내용' nickname='yunhae' time='2024.11.20'/>
-            <WriteIcon>
+            <WriteIcon onClick={() => navigate('/purchasewrite')}>
               <PlusIcon/>
             </WriteIcon>
         </PageContainer>

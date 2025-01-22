@@ -138,12 +138,12 @@ const SubmmitBtm = styled.button`
       cursor: pointer;
       color: #000;
       font-weight: bold;
-
     }
 `
-function Write() {
+function PurchaseWrite() {
   const [showImg,setShowImg] = useState<string[]>([]);
   const navigate = useNavigate();
+
   const handleClose = () => {    
     navigate('/home');
   }
@@ -200,14 +200,14 @@ function Write() {
 
       <Alarm type='공지' title='공동구매 글쓰기 가이드'/>
 
-      <InputContainer>
+      {/* <InputContainer>
         <InputType>카테고리</InputType>
         
         <CategotyContainer>
           <CategoryBtn>공동구매</CategoryBtn>
           <CategoryBtn>게시글</CategoryBtn>
         </CategotyContainer>
-      </InputContainer>
+      </InputContainer> */}
         
         <InputContainer>
           <InputType>제목</InputType>
@@ -300,4 +300,4 @@ function Write() {
   )
 }
 
-export default Write;
+export default PurchaseWrite;

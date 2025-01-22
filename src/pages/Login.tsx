@@ -5,7 +5,6 @@ import LogoImg from '../assets/Logo.png';
 import { useMutation } from '@tanstack/react-query';
 import instance from '../api/instance';
 import Modal from '../components/Modal/Modal';
-import { AxiosResponse } from "axios";
 
 const Background = styled.div`
   margin: 0;
@@ -121,17 +120,22 @@ interface userInfo {
 
 function Login() {
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] =useState(false);
+
   const [LoginData, setLoginData] = useState<userInfo>({
     username:'',
     password:''
   });
 
-  const [modalState, setModalState] = useState({ 
+  const [modalData, setModalData] = useState({ 
     isOpen: false, 
     title: "", 
     message: "",
-    destination: false,
-    endPoint: "",});
+    endpoint:"",
+    btnContent: "",
+    isButton: false,
+});
 
   const handleLogin = () => {
     mutation.mutate(LoginData);
@@ -148,57 +152,57 @@ function Login() {
       }
 
   const mutation = useMutation<{ access: string; refresh: string }, Error, userInfo>({
-    mutationFn: (LoginRequest: userInfo) => {
-      return instance
-      .post<{access: string, refresh: string}>('/accounts/login/',LoginRequest)
-      .then((response) => response.data)
+    mutationFn: async (LoginRequest: userInfo) => {
+      const response = await instance
+        .post<{ access: string; refresh: string; }>('/accounts/login/', LoginRequest);
+      return response.data;
     },
     
     onMutate: () => {
-      setModalState({
+      setModalData({
         isOpen: true,
         title: "처리 중",
         message: "로그인 요청을 처리하고 있습니다.",
-        destination: false,
-        endPoint: ""
+        isButton: false,
+        endpoint: '',
+        btnContent: "",
       });
     },
 
     onSuccess: (response) => {
-      localStorage.setItem('access', response.access);
-      localStorage.setItem("refresh", response.refresh);
 
-      setModalState({
+      setModalData({
         isOpen: true,
         title: "로그인 완료!",
         message: "홈메이트에 오신 것을 환영합니다. 🎉",
-        destination: true,
-        endPoint: 'home'
+        isButton: true,
+        endpoint:'/home',
+        btnContent: "홈메이트 시작하기",
       });
-      setInterval(() => {
-        navigate('/home')
-      }, 1000)
+
     },
     onError: (error) => {
-      setModalState({
+      setModalData({
         isOpen: true,
         title: "문제가 발생했습니다",
-        message: error.message || "-로그인 요청 중 오류가 발생했습니다.",
-        destination: false,
-        endPoint: ""
-      });
-    },
-
+        message: "로그인 요청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요",
+        isButton: true,
+        endpoint:'/login',
+        btnContent: "확인",
+        }
+  )},
   });
 
   return (
     <>
-        <Modal
-        isOpen={modalState.isOpen}
-        title={modalState.title}
-        message={modalState.message}
-        destination={modalState.destination}
-        onClose={() => setModalState({ isOpen: false, title: "", message: "", destination: false, endPoint: ""})}
+      <Modal
+        isOpen={modalData.isOpen}
+        title={modalData.title}
+        message={modalData.message}
+        isButton={modalData.isButton}
+        endpoint={modalData.endpoint}
+        btnContent={modalData.btnContent}
+        onClose={() => setIsModalOpen(false)}
       />
     <Background>
       <Container>

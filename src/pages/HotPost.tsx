@@ -8,6 +8,7 @@ import { makeCenterColumn } from '../styles/mixins';
 import { Header } from '../components/Header';
 import {useQuery } from '@tanstack/react-query';
 import { fetchBlog } from '../api/FetchBlog';
+import { useNavigate } from 'react-router-dom';
 
 const CommunityName = styled.div`
   width: 100%;
@@ -36,11 +37,16 @@ const WriteIcon = styled.div`
 }
 `
 function HotPost() {
-  
+  const navigate = useNavigate();
+
   const {isLoading, data} = useQuery({
     queryKey: ['getBlogContent'],
     queryFn: fetchBlog,
   });
+
+  const handleNewHotissue = () => {
+    navigate('/hotissuewrite');
+  }
      
   interface BlogContent {
     title:string;
@@ -61,7 +67,7 @@ function HotPost() {
       <Alarm type='안내' title='커뮤니티 이용 가이드'/>
       <Alarm type='공지' title='개인정보 처리방침'/>
       {isLoading ? (
-        "Loading"
+        "Loading" // 
       ) : (
        <>
         {data.map((item:BlogContent) => {
@@ -74,14 +80,11 @@ function HotPost() {
             time={item.date}/>
         </>
           )})}
-                <WriteIcon>
+        <WriteIcon onClick={handleNewHotissue}>
           <PlusIcon/>
         </WriteIcon>    
 </>
-
-      
       )}
-  
       </PageContainer>
     <Footer></Footer>
   </>

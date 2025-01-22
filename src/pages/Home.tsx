@@ -107,7 +107,7 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // 슬라이드 자동 이동
+   // 슬라이드 자동 이동
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageList.length);
     }, 3000);
@@ -137,7 +137,9 @@ function Home() {
         
         <ContentTitle>대시보드</ContentTitle>
             <DashBoardContainer>
-              <DashBoard onClick={() => handleClick('hotpost')}>
+              <DashBoard
+                
+                onClick={() =>handleClick('hotpost')}>
                 <NavigationIcon iconTitle='인기글' icon={<FireIcon />}/>
               </DashBoard>
               <DashBoard onClick={() => handleClick('purchase')}>

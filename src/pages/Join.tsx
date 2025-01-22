@@ -143,7 +143,6 @@ function Join() {
         isOpen={modalState.isOpen}
         title={modalState.title}
         message={modalState.message}
-        destination={modalState.destination}
         onClose={() => setModalState({ isOpen: false, title: "", message: "", destination: false, endPoint: ""})}
       />
     <PageContainer >

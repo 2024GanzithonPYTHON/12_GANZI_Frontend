@@ -7,9 +7,17 @@ const instance = axios.create({
   }
 });
 
+const setTokens = (accessToken :string, refreshToken: string) => {
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+};
 
-instance.interceptors.request.use(config => {
-    const token = localStorage.getItem('accessToken');
+const getAccessToken = () => localStorage.getItem('accessToken');
+const getRefreshToken = () => localStorage.getItem('refreshToken');
+
+instance.interceptors.request.use(
+  config => {
+    const token = getAccessToken();
     
     if(token) {
         config.headers['Authorization'] = `Bearer ${token}`;
@@ -25,9 +33,13 @@ instance.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
+      console.log(error);
+      
       // 토큰이 만료되었거나 유효하지 않은 경우
-      localStorage.removeItem('accessToken'); // 토큰 제거
-      window.location.href = '/login'; // 로그인 페이지로 리다이렉트
+      // localStorage.removeItem('accessToken'); // 토큰 제거
+      
+      //다시 요청
+      // window.location.href = '/login'; // 로그인 페이지로 리다이렉트
     }
     return Promise.reject(error);
   }
