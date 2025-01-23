@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import { ImageList } from "../data/ImageList";
-import NavigationIcon from "../components/Home/NavigationIcon";
+import NavigationIcon from "../components/Home/FooterIcon";
 import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
 import { FireIcon, ShoppingBagIcon } from "../assets/icons/icons";
 import { useNavigate } from "react-router-dom";

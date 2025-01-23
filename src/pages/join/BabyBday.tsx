@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.module.css';
 import styled from 'styled-components'
-import { TabBar } from '../components/Tab';
-import { PageContainer } from '../components/ScreenSizing';
+import { TabBar } from '../../components/Tab';
+import { PageContainer } from '../../components/ScreenSizing';
 import { ko } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
-import { NextButton } from '../components/Button';
-import {CommonProps} from '../styles/CommonProps';
+import { NextButton } from '../../components/Button';
+import {CommonProps} from '../../styles/CommonProps';
 
 const PageName = styled.div`
   width: 100%;

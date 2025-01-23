@@ -1,15 +1,15 @@
 import styled from 'styled-components'
-import { PageContainer } from '../components/ScreenSizing'
-import Alarm from '../components/Alarm'
-import {CloseImg} from '../assets/icons/icons'
-import { Header } from '../components/Header'
-import {makeCenterColumn, makeCenterRow} from '../styles/mixins'
+import { PageContainer } from '../../../components/ScreenSizing'
+import Alarm from '../../../components/Alarm'
+import {CloseImg} from '../../../assets/icons/icons'
+import { Header } from '../../../components/Header'
+import {makeCenterColumn, makeCenterRow} from '../../../styles/mixins'
 import { useNavigate } from 'react-router-dom'
-import { CommonProps } from '../styles/CommonProps'
+import { CommonProps } from '../../../styles/CommonProps'
 import { useMutation } from '@tanstack/react-query'
-import instance from '../api/instance'
+import instance from '../../../api/instance'
 import { useState } from 'react'
-import Modal from '../components/Modal/Modal'
+import Modal from '../../../components/Modal/Modal'
 
 const CommunityName = styled.div`
 ${makeCenterRow}
@@ -108,9 +108,9 @@ function HotIssueWrite() {
     const getAccessToken = localStorage.getItem('access');
 
     const mutation = useMutation({
-        mutationFn: async (uploadRequest:NewPost ) => {
+        mutationFn: async (hotPostUploadReq:NewPost ) => {
             const response = await instance
-                .post('/blog/', uploadRequest,
+                .post('/blog/', hotPostUploadReq,
                   {
                     headers : {
                       Authorization: `Bearer ${getAccessToken}`
@@ -141,9 +141,6 @@ function HotIssueWrite() {
             endpoint:'/hotpost',
             btnContent: '확인',
           });
-          // setInterval(() => {
-          //     navigate(-1)
-          //   }, 1000);
           
         },
         onError: () => {
@@ -157,7 +154,7 @@ function HotIssueWrite() {
         }
     })
 
-    const handleLoginInfo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handlePostData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         //joinData가 객체 형태이므로 저장도 객체 형태로 키와 값쌍으로 연결시켜서 저장해주어야 한다.
         const {name, value} = e.target;
     
@@ -195,7 +192,7 @@ function HotIssueWrite() {
           <InputContent 
             placeholder='제목'
             name='title'
-            onChange={handleLoginInfo} />
+            onChange={handlePostData} />
         </InputContainer>
 
         <InputContainer>
@@ -204,7 +201,7 @@ function HotIssueWrite() {
             placeholder='게시글 설명' 
             height='1000px' 
             name='body'
-            onChange={handleLoginInfo}/>
+            onChange={handlePostData}/>
         </InputContainer>
 
         <SubmmitBtm onClick={handleSubmit}>작성 완료</SubmmitBtm>

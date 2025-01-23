@@ -1,13 +1,13 @@
 import styled from 'styled-components'
-import { PageContainer } from '../components/ScreenSizing';
-import { PlusIcon, BackIcon} from '../assets/icons/icons'
-import Alarm from '../components/Alarm';
-import Post from '../components/Post';
-import Footer from '../components/Footer';
-import { Header } from '../components/Header'
-import { makeCenterColumn } from '../styles/mixins';
+import { PageContainer } from '../../../components/ScreenSizing';
+import { PlusIcon, BackIcon} from '../../../assets/icons/icons'
+import Alarm from '../../../components/Alarm';
+import Post from '../../../components/Post';
+import Footer from '../../../components/Footer';
+import { Header } from '../../../components/Header'
+import { makeCenterColumn } from '../../../styles/mixins';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPurchase } from '../api/FetchPurcahse';
+import { fetchPurchase } from '../../../api/FetchPurcahse';
 import { useNavigate } from 'react-router-dom';
 
 const CommunityName = styled.div`
@@ -36,6 +36,12 @@ const WriteIcon = styled.div`
   right: 15px;
 }
 `
+
+const IconWrapper = styled.div`
+  width: 7%;
+  height: 100%;
+  cursor: pointer;
+`
 function Purchase() {
   const navigate = useNavigate();
   const {isLoading, data} = useQuery({
@@ -53,7 +59,9 @@ function Purchase() {
     <>
         <PageContainer>
           <Header >
+          <IconWrapper  onClick={() => navigate('/home')}>
             <BackIcon/>
+          </IconWrapper>
             <CommunityName>공동구매</CommunityName>
           </Header>
             <Alarm type='안내' title='커뮤니티 이용 가이드'/>

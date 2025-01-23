@@ -1,17 +1,17 @@
 import React, {useState } from 'react';
 import styled from 'styled-components';
-import { PageContainer } from '../components/ScreenSizing';
-import { BackIcon } from '../assets/icons/icons'
-import Logo from '../assets/Logo.png';
-import HouseLogo from '../assets/HouseLogo.png'
-import { TabBar } from '../components/Tab';
-import theme from '../utils/theme/Theme';
-import { JoinInputContainer} from '../components/Input';
-import { NextButton } from '../components/Button';
+import { PageContainer } from '../../components/ScreenSizing';
+import { BackIcon } from '../../assets/icons/icons'
+import Logo from '../../assets/Logo.png';
+import HouseLogo from '../../assets/HouseLogo.png'
+import { TabBar } from '../../components/Tab';
+import { JoinInputContainer} from '../../components/Input';
+import { NextButton } from '../../components/Button';
 import {useMutation} from '@tanstack/react-query';
-import instance from '../api/instance';
-import Modal from '../components/Modal/Modal';
+import instance from '../../api/instance';
+import Modal from '../../components/Modal/Modal';
 import { useNavigate } from 'react-router-dom';
+import theme from '../../utils/theme/Theme';
 
 
 const Header = styled.div` //conponent

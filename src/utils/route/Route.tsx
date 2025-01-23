@@ -1,17 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import Join from '../../pages/Join';
-import Userinfo from '../../pages/Userinfo';
-import Login from '../../pages/Login';
-import HotPost from '../../pages/HotPost';
-import Purchase from '../../pages/Purchase';
+import Join from '../../pages/auth/Join';
+import Userinfo from '../../pages/join/Userinfo';
+import Login from '../../pages/auth/Login';
+import HotPost from '../../pages/dashboard/hotpost/HotPost';
 import Start from '../../pages/Start'
-import BabyBday from '../../pages/BabyBday';
-import BabyName from '../../pages/BabyName';
-import BabyRelation from '../../pages/BabyRelation';
-import BabyStatus from '../../pages/BabyStatus';
+import BabyBday from '../../pages/join/BabyBday';
+import BabyName from '../../pages/join/BabyName';
+import BabyRelation from '../../pages/join/BabyRelation';
+import BabyStatus from '../../pages/join/BabyStatus';
 import Home from '../../pages/Home';
-import PurchaseWrite from '../../pages/PurchaseWrite';
-import HotIssueWrite from '../../pages/HotIssueWrite';
+import PurchaseWrite from '../../pages/dashboard/purchase/PurchaseWrite';
+import HotIssueWrite from '../../pages/dashboard/hotpost/HotIssueWrite';
+import Purchase from '../../pages/dashboard/purchase/Purchase';
 
 export const routes = [
     {path: '/' , element: <Start/>},

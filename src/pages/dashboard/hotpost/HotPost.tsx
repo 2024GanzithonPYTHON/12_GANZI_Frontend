@@ -1,13 +1,13 @@
-import { PageContainer } from '../components/ScreenSizing';
-import {BackIcon, PlusIcon} from '../assets/icons/icons'
+import { PageContainer } from '../../../components/ScreenSizing';
+import {BackIcon, PlusIcon} from '../../../assets/icons/icons'
 import styled from 'styled-components';
-import Alarm from '../components/Alarm';
-import Post from '../components/Post';
-import Footer from '../components/Footer';
-import { makeCenterColumn } from '../styles/mixins';
-import { Header } from '../components/Header';
+import Alarm from '../../../components/Alarm';
+import Post from '../../../components/Post';
+import Footer from '../../../components/Footer';
+import { makeCenterColumn } from '../../../styles/mixins';
+import { Header } from '../../../components/Header';
 import {useQuery } from '@tanstack/react-query';
-import { fetchBlog } from '../api/FetchBlog';
+import { fetchBlog } from '../../../api/FetchBlog';
 import { useNavigate } from 'react-router-dom';
 
 const CommunityName = styled.div`
@@ -18,7 +18,11 @@ const CommunityName = styled.div`
   align-items: center;
   justify-content: center;
 `
-
+const IconWrapper = styled.div`
+  width: 7%;
+  height: 100%;
+  cursor: pointer;
+`
 const WriteIcon = styled.div`
   ${makeCenterColumn}
   position: fixed; /* 화면에 고정 */
@@ -59,7 +63,9 @@ function HotPost() {
     <>
     <PageContainer>
     <Header fontWeight='bold'>
+      <IconWrapper  onClick={() => navigate('/home')}>
         <BackIcon/>
+      </IconWrapper>
         <CommunityName>인기글 게시판</CommunityName>
 
       </Header>        

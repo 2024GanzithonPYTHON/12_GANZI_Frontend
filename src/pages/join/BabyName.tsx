@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TabBar } from '../components/Tab';
-import { PageContainer } from '../components/ScreenSizing';
-import { NextButton } from '../components/Button';
+import { TabBar } from '../../components/Tab';
+import { PageContainer } from '../../components/ScreenSizing';
+import { NextButton } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
-import { CommonProps } from '../styles/CommonProps';
+import { CommonProps } from '../../styles/CommonProps';
 
 const PageName = styled.div`
   width: 100%;

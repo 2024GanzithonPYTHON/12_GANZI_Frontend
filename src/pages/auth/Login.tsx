@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import LogoImg from '../assets/Logo.png';
+import LogoImg from '../../assets/Logo.png';
 import { useMutation } from '@tanstack/react-query';
-import instance from '../api/instance';
-import Modal from '../components/Modal/Modal';
+import instance from '../../api/instance';
+import Modal from '../../components/Modal/Modal';
 
 const Background = styled.div`
   margin: 0;

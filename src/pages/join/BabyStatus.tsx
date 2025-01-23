@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { PageContainer } from '../components/ScreenSizing';
-import { BabyInfoInput} from '../components/Input';
+import { PageContainer } from '../../components/ScreenSizing';
+import { BabyInfoInput} from '../../components/Input';
 import { useNavigate } from 'react-router-dom';
-import { NextButton } from '../components/Button';
-import { TabBar } from '../components/Tab';
+import { NextButton } from '../../components/Button';
+import { TabBar } from '../../components/Tab';
 
 interface inputExlanation {
   fontSize?:string;
