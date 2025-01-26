@@ -1,9 +1,9 @@
-// 이메일데이터를 제외한 공동 구매 글 전체 데이터
+// 이메일 데이터를 제외한 공동 구매 글 전체 데이터
 import styled from 'styled-components'
 import { PlusIcon, CloseImg} from '../../../assets/icons/icons'
 import { CommonProps } from '../../../styles/CommonProps'
 import {makeCenterColumn} from '../../../styles/mixins'
-import { useState } from 'react'
+import {useState } from 'react'
 
 const InputContainer = styled.div`
   ${makeCenterColumn}
@@ -87,20 +87,26 @@ const CloseIcon = styled.div`
 `
 interface PurchasePost {
     title: string;
-    image?: string[];
+    image: string[];
     body: string;
     duration_date: string;
     duration_time: string;
-    min_participants: number; //아마 number로 변환해줘야 할 듯 
+    min_participants: number; 
   }
 
-function PostContent() {
+  interface PurchasePostProps {
+    purchaseData : PurchasePost,
+    setPurchaseData : React.Dispatch<React.SetStateAction<PurchasePost>>
+  }
+
+function PostContent({purchaseData, setPurchaseData} : PurchasePostProps) {
     const [showImg,setShowImg] = useState<string[]>([]);
     const uploadImages =  (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!e.target.files) {
+      const files =   e.target.files
+      if(!files) {
           return;
         } 
-          const ImageArr = Array.from(e.target.files);
+        const ImageArr = Array.from(files);
         
         const promises = ImageArr.map((img) => {
           return new Promise<string>((resolve, reject) => {
@@ -110,7 +116,7 @@ function PostContent() {
     
             fileRead.onload = () => {  //파일 읽는 게 성공할 시 실행되는 함수
             resolve(fileRead.result as string ); //resolve() : promise 상태를 성공으로 바꾸고 값을 반환하는 함수 
-            }
+          }
     
             fileRead.onerror = (error) => {
               reject(error);
@@ -122,7 +128,14 @@ function PostContent() {
         Promise.all(promises) //PromiseResult 값만 배열로 반환
           .then((imageUrl) => {
             // console.log('imageUrl :', imageUrl);  //["data:image/png;base64,...", "data:image/png;base64,..."]
-            setShowImg((prev: string[]) => [...prev, ...imageUrl]);
+            setShowImg((prev) => {
+              const updatedImages =  [...prev, ...imageUrl];
+              setPurchaseData((postData) => ({
+                ...postData,
+                image: updatedImages,
+              }));
+              return updatedImages;
+            });
           })
           .catch((error) => {
             console.error("error",error);
@@ -131,30 +144,25 @@ function PostContent() {
     
       //이미지삭제
       const handleDeleteImg = (deletedIndex: number) => {
-        if(deletedIndex) {
-        const updatedImg = showImg.filter((item, index) => deletedIndex!== index)
-        setShowImg(updatedImg);
-        }
-      }
+          setShowImg((prev) => {
+            const updatedImg = prev.filter((_, index) => deletedIndex!== index);
+            setPurchaseData((post) => ({
+              ...post,
+              image: updatedImg,
+            }));
+            return updatedImg;
+          });
+      };
 
-      const [purchasePost, setPurchasePost] = useState<PurchasePost>({
-        title: "",
-        image: showImg,
-        body: "",
-        duration_date:"",
-        duration_time:"",
-        min_participants: 0,
-      })
 
       const handlePostData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        //joinData가 객체 형태이므로 저장도 객체 형태로 키와 값쌍으로 연결시켜서 저장해주어야 한다.
         const {name, value} = e.target;
-      
-        setPurchasePost((prev) => ({
+
+        setPurchaseData((prev) => ({
           ...prev,
-          [name] : value,
+          [name] : name === 'image' ? showImg : value,
         }));
-          }
+      }
 
   return (
     <>
@@ -163,7 +171,8 @@ function PostContent() {
           <InputContent 
             placeholder='제목'
             name='title'
-            onChange={handlePostData}  />
+            onChange={handlePostData}
+            value={purchaseData.title}  />
         </InputContainer>
 
         <InputContainer>
@@ -173,7 +182,9 @@ function PostContent() {
           <ImgInput 
             multiple={true} 
             type='file' 
-            onChange={uploadImages} />
+            name='image' //여기까지 함. input 태그내에 name 설정하는 거 계속 하면 됨. => 데이터 잘 들어오는 지 확인 => 상위 페이지로 데이터 넘기기
+            onChange={uploadImages}
+            /> 
           <div style={{position: 'relative', zIndex:'2'}}>
               <PlusIcon style={{cursor:'pointer'}}/>
           </div>
@@ -194,15 +205,17 @@ function PostContent() {
           <InputContent 
             placeholder='YYYY-MM-DD'
             name='duration_date'
-            onChange={handlePostData}  />
+            onChange={handlePostData}
+            value={purchaseData.duration_date}  />
         </InputContainer>
 
         <InputContainer>
           <InputType>구매 신청 마감 시간</InputType>
           <InputContent 
-            placeholder='00:00'
+            placeholder='00:00:00'
             name='duration_time'
-            onChange={handlePostData}   />
+            onChange={handlePostData}
+            value={purchaseData.duration_time}   />
         </InputContainer>
 
         <InputContainer>
@@ -211,6 +224,7 @@ function PostContent() {
             placeholder='숫자만 입력해주세요.'
             name='min_participants'
             onChange={handlePostData}
+            value={purchaseData.min_participants}
              />
         </InputContainer>
 
@@ -221,6 +235,7 @@ function PostContent() {
             height='500px'
             name='body'
             onChange={handlePostData}
+            value={purchaseData.body}
              />
         </InputContainer>
     </>

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Alarm from '../../../components/Alarm'
 import {makeCenterColumn} from '../../../styles/mixins'
 import { CommonProps } from '../../../styles/CommonProps'
-import { useState } from 'react'
 
 const InputContainer = styled.div`
   ${makeCenterColumn}
@@ -41,15 +40,12 @@ interface Email {
   contact_info: string;
 }
 
-function EmailContent() {
-    const [emailData, setEmailData] = useState<Email>( {
-      subject: "",
-      body:"",
-      payment_period: "",
-      bank_name: "",
-      account_number: "",
-      contact_info: ""
-    })
+interface EmailContentProps {
+  emailData: Email;
+  setEmailData: React.Dispatch<React.SetStateAction<Email>>;
+}
+
+function EmailContent({ emailData, setEmailData }: EmailContentProps) {
 
       const handleEmailData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         //joinData가 객체 형태이므로 저장도 객체 형태로 키와 값쌍으로 연결시켜서 저장해주어야 한다.
@@ -57,45 +53,73 @@ function EmailContent() {
     
         setEmailData((prev) => ({
           ...prev,
-          [name] : value,
+          [name]: value,
         }));
           }
+        
   return (
     <>
         <Alarm type='안내' title='아래는 공동 구매가 성공적으로 진행될 때, 소비자에게 소식을 알리는 이메일 내용 입력칸입니다.'></Alarm>
 
         <InputContainer>
           <InputType>이메일 제목</InputType>
-          <InputContent placeholder='제목' />
+          <InputContent 
+            onChange = {handleEmailData} 
+            name='subject'
+            placeholder='제목'
+            value={emailData.subject} />
         </InputContainer>
 
         <InputContainer>
           <InputType>입금받으실 은행</InputType>
-          <InputContent placeholder='은행명' />
+          <InputContent 
+            onChange = {handleEmailData} 
+            name='bank_name'
+            placeholder='은행명'
+            value={emailData.bank_name} />
         </InputContainer>
 
         <InputContainer>
           <InputType>결제 마감 날짜</InputType>
-          <InputContent placeholder='YYYY-MM-DD까지' />
+          <InputContent 
+            name='payment_period'
+            placeholder='YYYY-MM-DD까지'
+            onChange = {handleEmailData}  
+            value={emailData.payment_period}
+            />
         </InputContainer>
 
         <InputContainer>
           <InputType>계좌번호</InputType>
           <InputContent 
-            placeholder='숫자만 입력해주세요'/>
+              name='account_number'
+              onChange = {handleEmailData} 
+              placeholder='숫자만 입력해주세요'
+              value={emailData.account_number}
+              />
+
         </InputContainer>
 
         <InputContainer>
           <InputType>문의 받으실 이메일</InputType>
           <InputContent 
-            placeholder='이메일'/>
+            name='contact_info'
+            onChange = {handleEmailData} 
+            placeholder='이메일'
+            value={emailData.contact_info}
+            />
         </InputContainer>
 
         <InputContainer>
           <InputType>이메일 내용</InputType>
-          <InputContent placeholder='결제 및 배송과 관련된 내용을 입력해주세요' height='500px' />
+          <InputContent 
+            name='body'
+            onChange = {handleEmailData} 
+            placeholder='결제 및 배송과 관련된 내용을 입력해주세요' 
+            height='500px' 
+            value={emailData.body}
+          />
         </InputContainer>
-
     </>
   )
 }
