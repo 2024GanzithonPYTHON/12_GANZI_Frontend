@@ -11,9 +11,9 @@ const PostContainer = styled.div`
 const EachPost = styled.div`
     width: 100%;
     height: 80px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.grayColor};
+    /* border-bottom: 1px solid ${({theme}) => theme.colors.grayColor}; */
     padding: 0px 20px 10px 20px;
-    
+    cursor: pointer;
 `
 const Title = styled.div`
     width: 100%;
@@ -25,6 +25,8 @@ const Title = styled.div`
 const Content = styled.div`
     color: #EAEAEA;
     font-size: 12px;
+    text-overflow: ellipsis;
+
 `
 const NickName = styled.div`
     height: auto;
@@ -35,7 +37,7 @@ const Date = styled.div`
     color: #7C7C7C;
     font-size: 12px;
 `
-function Post({title, content,nickname, time} :{title: string, content: string, nickname: string, time: string}) {
+function Post({title, content,nickname, time, id, user} :{title: string, content: string, nickname: string, time: string, id : number, user:number}) {
   return (
     <PostContainer>
         <EachPost>

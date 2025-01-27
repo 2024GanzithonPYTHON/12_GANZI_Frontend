@@ -53,6 +53,8 @@ function Purchase() {
     nickname: string;
     date: string;
     body: string;
+    id: number;
+    user: number;
   }
   
   return (
@@ -74,6 +76,8 @@ function Purchase() {
           return (
           <>  
           <Post 
+            user = {item.user}
+            id = {item.id}
             title={item.title}
             content={item.body}
             nickname={item.nickname}
